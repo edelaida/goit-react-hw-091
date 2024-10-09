@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
-  deleteTask,
   selectSearchStr,
   selectTasks,
   toggleTask,
 } from "../../redux/taskSlice";
 import s from "./TodoList.module.css";
+import { dleteTodoThunk } from "../../redux/taskOps";
 
 export const List = () => {
   const tasks = useSelector(selectTasks);
@@ -25,7 +25,10 @@ export const List = () => {
             onChange={() => dispatch(toggleTask(item.id))}
           />
           <p>{item.todo}</p>
-          <button onClick={() => dispatch(deleteTask(item.id))}> Delete</button>
+          <button onClick={() => dispatch(dleteTodoThunk(item.id))}>
+            {" "}
+            Delete
+          </button>
         </li>
       ))}
     </ul>
