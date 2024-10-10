@@ -1,5 +1,5 @@
 import axios from "axios";
-import { addTodo, deleteTask } from "./taskSlice";
+//import { addTodo, deleteTask } from "./taskSlice";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 axios.defaults.baseURL = "https://670562e3031fd46a830fc2a3.mockapi.io";
@@ -16,18 +16,32 @@ export const deleteTodoThunk = createAsyncThunk(
   "deleteTodo",
   async (id, thunkApi) => {
     try {
-      const { data } = await axios.delete("/tasks/${id}");
+      const { data } = await axios.delete(`/tasks/${id}`);
       return data.id;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
     }
   }
 );
-export const addTodoThunks = createAsyncThunk(
+export const addTodoThunk = createAsyncThunk(
   "addTodo",
   async (body, thunkApi) => {
     try {
       const { data } = await axios.post("/tasks", body);
+      return data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+export const toggleTodoThunk = createAsyncThunk(
+  "toggle",
+  async (body, thunkApi) => {
+    try {
+      const { data } = await axios.put(`/tasks/${body.id}`, {
+        ...body,
+        completed: !body.completed,
+      });
       return data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);

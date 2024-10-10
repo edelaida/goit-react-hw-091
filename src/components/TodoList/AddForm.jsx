@@ -1,14 +1,14 @@
 import { Field, Form, Formik } from "formik";
 import s from "./TodoList.module.css";
 import { useDispatch } from "react-redux";
-import { addTodoThunks } from "../../redux/taskOps";
+import { addTodoThunk } from "../../redux/taskOps";
 
 export const AddForm = () => {
   const initialValues = { todo: "" };
   const dispatch = useDispatch();
 
   const onSubmit = (values, options) => {
-    dispatch(addTodoThunks(values));
+    dispatch(addTodoThunk(values));
     options.resetForm();
   };
 

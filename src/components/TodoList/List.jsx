@@ -1,11 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
-import {
-  selectSearchStr,
-  selectTasks,
-  toggleTask,
-} from "../../redux/taskSlice";
+import { selectTasks } from "../../redux/taskSlice";
 import s from "./TodoList.module.css";
-import { dleteTodoThunk } from "../../redux/taskOps";
+import { deleteTodoThunk, toggleTodoThunk } from "../../redux/taskOps";
+import { selectSearchStr } from "../../redux/searchSlice";
 
 export const List = () => {
   const tasks = useSelector(selectTasks);
@@ -22,10 +19,10 @@ export const List = () => {
           <input
             type="checkbox"
             checked={item.completed}
-            onChange={() => dispatch(toggleTask(item.id))}
+            onChange={() => dispatch(toggleTodoThunk(item.id))}
           />
           <p>{item.todo}</p>
-          <button onClick={() => dispatch(dleteTodoThunk(item.id))}>
+          <button onClick={() => dispatch(deleteTodoThunk(item.id))}>
             {" "}
             Delete
           </button>
