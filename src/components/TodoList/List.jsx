@@ -23,7 +23,6 @@ export const List = () => {
           />
           <p>{item.todo}</p>
           <button onClick={() => dispatch(deleteTodoThunk(item.id))}>
-            {" "}
             Delete
           </button>
         </li>
