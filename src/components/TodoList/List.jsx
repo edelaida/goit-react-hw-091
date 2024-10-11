@@ -19,7 +19,7 @@ export const List = () => {
           <input
             type="checkbox"
             checked={item.completed}
-            onChange={() => dispatch(toggleTodoThunk(item.id))}
+            onChange={() => dispatch(toggleTodoThunk(item))}
           />
           <p>{item.todo}</p>
           <button onClick={() => dispatch(deleteTodoThunk(item.id))}>
