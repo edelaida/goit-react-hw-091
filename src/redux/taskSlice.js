@@ -5,6 +5,7 @@ import {
   fetchTodos,
   toggleTodoThunk,
 } from "./taskOps";
+import { selectFilter } from "./filterSlice";
 
 const initialState = {
   items: [],
@@ -77,13 +78,20 @@ export const selectTasks = (state) => state.tasks.items;
 export const selectIsLoading = (state) => state.tasks.isLoading;
 export const selectIsError = (state) => state.tasks.isError;
 
-//export const selectSearchStr = (state) => state.tasks.searchStr;
-// export const {
-//   deleteTask,
-//   addTodo,
-//   changeSearch,
-//   toggleTask,
-//   fetchDataSuccess,
-//   setIsLoading,
-//   setError,
-// } = slice.actions;
+export const selectFilterData = (state) => {
+  const tasks = selectTasks(state);
+  const filter = selectFilter(state);
+  switch (filter) {
+    case "active":
+      return tasks.filter((todo) => !todo.completed);
+    case "completed":
+      return tasks.filter((todo) => todo.completed);
+    default:
+      return tasks;
+  }
+};
+
+export const selectUncompletedTodos = (state) => {
+  const tasks = selectTasks(state);
+  return tasks.reduce((total, curr) => (curr.completed ? total : total + 1), 0);
+};

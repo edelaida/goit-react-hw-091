@@ -7,8 +7,8 @@ const Filter = () => {
   return (
     <div className={s.wrapperFilter}>
       <button onClick={() => dispatch(setFilterValue("all"))}>All</button>
-      <button onClick={() => dispatch(setFilterValue("Active"))}>Active</button>
-      <button onClick={() => dispatch(setFilterValue("Completed"))}>
+      <button onClick={() => dispatch(setFilterValue("active"))}>Active</button>
+      <button onClick={() => dispatch(setFilterValue("completed"))}>
         Completed
       </button>
     </div>
