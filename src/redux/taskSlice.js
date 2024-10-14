@@ -1,4 +1,4 @@
-import { createSlice, isAnyOf } from "@reduxjs/toolkit";
+import { createSelector, createSlice, isAnyOf } from "@reduxjs/toolkit";
 import {
   addTodoThunk,
   deleteTodoThunk,
@@ -78,20 +78,37 @@ export const selectTasks = (state) => state.tasks.items;
 export const selectIsLoading = (state) => state.tasks.isLoading;
 export const selectIsError = (state) => state.tasks.isError;
 
-export const selectFilterData = (state) => {
-  const tasks = selectTasks(state);
-  const filter = selectFilter(state);
-  switch (filter) {
-    case "active":
-      return tasks.filter((todo) => !todo.completed);
-    case "completed":
-      return tasks.filter((todo) => todo.completed);
-    default:
-      return tasks;
+export const selectFilterData = createSelector(
+  [selectTasks, selectFilter],
+  (tasks, filter) => {
+    switch (filter) {
+      case "active":
+        return tasks.filter((todo) => !todo.completed);
+      case "completed":
+        return tasks.filter((todo) => todo.completed);
+      default:
+        return tasks;
+    }
   }
-};
+);
 
-export const selectUncompletedTodos = (state) => {
-  const tasks = selectTasks(state);
+// export const selectFilterDat = (state) => {
+//   const tasks = selectTasks(state);
+//   const filter = selectFilter(state);
+//   switch (filter) {
+//     case "active":
+//       return tasks.filter((todo) => !todo.completed);
+//     case "completed":
+//       return tasks.filter((todo) => todo.completed);
+//     default:
+//       return tasks;
+//   }
+// };
+
+export const selectUncompletedTodos = createSelector([selectTasks], (tasks) => {
   return tasks.reduce((total, curr) => (curr.completed ? total : total + 1), 0);
-};
+});
+// export const selectUncompletedTodos = (state) => {
+//   const tasks = selectTasks(state);
+//   return tasks.reduce((total, curr) => (curr.completed ? total : total + 1), 0);
+// };
